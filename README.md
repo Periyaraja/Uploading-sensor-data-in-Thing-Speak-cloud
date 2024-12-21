@@ -1,5 +1,6 @@
 # Uploading temperature sensor data in Thing Speak cloud
-
+Name:Periyaraja.P.M
+Reg.No:24001966
 # AIM:
 To monitor the temperature sensor data in the Thing speak using an ESP32 controller.
 
@@ -71,10 +72,73 @@ Automatically act on your data and communicate using third-party services like T
 
 
 # PROGRAM:
+#include "ThingSpeak.h"
+#include <WiFi.h>
+#include "DHT.h"
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+char ssid[] = "xxx"; // Your WiFi SSID
+char pass[] = "xxx"; // Your WiFi password
+
+const int out = 26; // Pin for temperature sensor data
+long T;
+float temperature = 0; // Initialize temperature
+WiFiClient client;
+DHT dht(26, DHT11);
+
+unsigned long myChannelField = 2487114; // Channel ID
+const int TemperatureField = 1;        // Field for temperature data
+const int HumidityField = 2;          // Field for humidity data
+
+const char* myWriteAPIKey = "BT4O1P45J883JFQT"; // Your write API Key
+
+// Temperature sensor setup
+void setup() {
+  Serial.begin(115200);
+  pinMode(out, INPUT); // Set pin mode to input for temperature sensor
+  ThingSpeak.begin(client);
+ }
+
+void loop() 
+{
+  if (WiFi.status() != WL_CONNECTED) 
+  {
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
+    while (WiFi.status() != WL_CONNECTED) 
+    {
+      WiFi.begin(ssid, pass);
+      Serial.print(".");
+      delay(5000);
+    }
+    Serial.println("\nConnected.");
+  }
+    // Read temperature
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+  
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  Serial.print("Humidity ");
+  Serial.print(humidity);
+  Serial.println(" g.m-3");
+
+  // Write temperature to ThingSpeakaK
+  ThingSpeak.writeField(myChannelField, TemperatureField, temperature, myWriteAPIKey); // Write temperature to ThingSpeak
+  ThingSpeak.writeField(myChannelField, HumidityField, humidity, myWriteAPIKey); // Write humidity to ThingSpeak
+
+
+  delay(1000);
+}
 
 # CIRCUIT DIAGRAM:
+![image](https://github.com/user-attachments/assets/92833fcb-2422-4954-826f-988cb6f23642)
 
 # OUTPUT:
+![image](https://github.com/user-attachments/assets/c0cafdea-3bce-4588-b8e8-8b7d992bc141)
 
 # RESULT:
 
