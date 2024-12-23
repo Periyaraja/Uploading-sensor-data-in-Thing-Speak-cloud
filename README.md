@@ -138,7 +138,10 @@ void loop()
 ![image](https://github.com/user-attachments/assets/92833fcb-2422-4954-826f-988cb6f23642)
 
 # OUTPUT:
-![image](https://github.com/user-attachments/assets/c0cafdea-3bce-4588-b8e8-8b7d992bc141)
+![image](https://github.com/user-attachments/assets/61961d83-38a2-489f-a16b-868617c0176e)
+![image](https://github.com/user-attachments/assets/ac5c5f70-b6b0-4f74-8e89-42de2f72e110)
+
+
 
 # RESULT:
 
